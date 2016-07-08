@@ -8,20 +8,20 @@ class Basket
   end
 
   def add(product)
-    found = @basket.find { |record| record.product == product }
-    found.nil? ? @basket << BasketRecord.new(product) : found.add
+    basket_record = @basket.find { |record| record.product == product }
+    basket_record.nil? ? @basket << BasketRecord.new(product) : basket_record.add
   end
 
   def delete(id)
-    found = @basket.find { |record| record.product.id == id }
-    if found.nil?
+    basket_record = @basket.find { |record| record.product.id == id }
+    if basket_record.nil?
       false
     else
-      if found.quantity == 1
-        @basket.delete(found)
+      if basket_record.quantity == 1
+        @basket.delete(basket_record)
         true
       else
-        found.delete
+        basket_record.delete
         true
       end
     end

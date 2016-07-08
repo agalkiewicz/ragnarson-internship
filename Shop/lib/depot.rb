@@ -1,11 +1,11 @@
-require_relative "./products"
+require_relative "./shop"
 
 class Depot
   attr_accessor :depot
 
-  def initialize(products)
+  def initialize(shop)
     @depot = []
-    products.each { |product| add(rand(10), product) }
+    shop.each { |product| add(rand(10), product) }
   end
 
   def is_available?(product)

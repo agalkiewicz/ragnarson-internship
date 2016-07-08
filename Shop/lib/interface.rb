@@ -2,10 +2,10 @@ require_relative "./basket"
 require_relative "./depot"
 
 class Interface
-  def self.welcome(products)
+  def self.welcome(shop)
     puts "Welcome to our shop.\n\n--------------\n---PRODUCTS---\n--------------\n" +
          "Id".ljust(4) + "Name".ljust(10) + "Price".ljust(10) + "VAT".ljust(6) + "\n" +
-         products.to_s
+         shop.to_s
   end
 
   def self.menu

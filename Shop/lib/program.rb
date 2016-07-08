@@ -3,10 +3,10 @@ require_relative "./interface"
 class Program
   def self.run
     basket = Basket.new
-    products = Products.new
-    depot = Depot.new(products.products)
+    shop = Shop.new
+    depot = Depot.new(shop.products)
 
-    Interface.welcome(products)
+    Interface.welcome(shop)
 
     loop do
       Interface.menu
@@ -15,7 +15,7 @@ class Program
       if choice == '1'
         puts "Which product? (Select id.)"
         id = gets.chomp
-        product = products.get_product(id.to_i)
+        product = shop.product(id.to_i)
         if product.nil?
           puts "Bad id!"
         else

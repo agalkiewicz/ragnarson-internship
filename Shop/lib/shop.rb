@@ -1,6 +1,6 @@
-require_relative "./product"
+require_relative "./shop"
 
-class Products
+class Shop
   attr_accessor :products
 
   def initialize
@@ -13,11 +13,11 @@ class Products
     ]
   end
 
-  def get_product(id)
+  def product(id)
     @products.find { |product| product.id == id }
   end
 
   def to_s
-    @products.inject("") { |string, product| string + "#{product}\n" }
+    @products.map(&:to_s).join("\n")
   end
 end
