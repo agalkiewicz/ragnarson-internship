@@ -5,9 +5,7 @@ class Product
   @@id = 0
 
   def initialize(name:, price:, vat:)
-    raise ArgumentError if name.nil?
-    raise ArgumentError if price.nil?
-    raise ArgumentError if vat.nil?
+    raise ArgumentError if name.nil? || price.nil? || vat.nil?
     raise ArgumentError if price <= 0
     raise ArgumentError if vat <= 0 || vat > 0.23
     @id = next_id
