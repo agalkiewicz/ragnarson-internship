@@ -1,23 +1,46 @@
-require_relative "./shop"
+Dir["./lib/**/*.rb"].each { |file| require file }
 
-class Shop
-  attr_accessor :products
+module Shop
+  PRODUCTS = Products.new
+  DEPOT = Depot.new
+  BASKET = Basket.new
 
-  def initialize
-    @products = [
-      Product.new(name: "Book", price: 24.50, vat: 0.05),
-      Product.new(name: "Pot", price: 12.70, vat: 0.08),
-      Product.new(name: "Bowl", price: 2.00, vat: 0.08),
-      Product.new(name: "Knife", price: 10.15, vat: 0.08),
-      Product.new(name: "Movie", price: 27.50, vat: 0.05)
-    ]
-  end
+  class Main
+    def self.run
+      Welcome.new.print
+      CreateDepot.new.call
 
-  def product(id)
-    @products.find { |product| product.id == id }
-  end
+      loop do
+        begin
+          Menu.new.print
+          choice = gets.chomp
 
-  def to_s
-    @products.map(&:to_s).join("\n")
+          case choice
+          when '1'
+            puts "Which product? (Select id.)"
+            id = gets.chomp
+            AddProductToBasket.new.call(id.to_i)
+            Info.new.print
+          when '2'
+            puts "Which product? (Select id.)"
+            id = gets.chomp
+            DeleteProductFromBasket.new.call(id.to_i)
+            Info.new.print
+          when '3'
+            exit
+          else
+            puts "Invalid option! Choose again."
+          end
+        rescue Depot::NoProductException
+          puts "There is no product of this id in a depot."
+          retry
+        rescue Basket::NoProductFoundException
+          puts "There is no product of this id in the basket."
+          retry
+        end
+      end
+    end
   end
 end
+
+Shop::Main.run
