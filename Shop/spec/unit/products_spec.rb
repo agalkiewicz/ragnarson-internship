@@ -1,20 +1,20 @@
-require_relative '../../lib/products'
+require_relative '../../lib/shop'
 
-RSpec.describe Products do
+RSpec.describe Shop do
   before(:all) do
-    @products = Products.new
+    @shop = Shop.new
   end
 
   context "#products" do
-    context "when Products object is created" do
+    context "when Shop object is created" do
       it "products array is initialized with objects" do
-        expect(@products.products).not_to be_empty
+        expect(@shop.products).not_to be_empty
       end
     end
 
     context "during iteration through products array" do
       it "Product objects are returned" do
-        @products.products.each do |product|
+        @shop.products.each do |product|
           expect(product).to be_an_instance_of(Product)
         end
       end
@@ -24,13 +24,13 @@ RSpec.describe Products do
   context "#get_product(id)" do
     context "when id < 0" do
       it "returns nil" do
-        expect(@products.get_product(-1)).to be_nil
+        expect(@shop.product(-1)).to be_nil
       end
     end
 
     context "when id is a string" do
       it "returns nil" do
-        expect(@products.get_product("1")).to be_nil
+        expect(@shop.product("1")).to be_nil
       end
     end
   end
