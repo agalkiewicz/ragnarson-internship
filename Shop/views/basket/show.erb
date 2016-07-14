@@ -1,0 +1,29 @@
+<h1>My basket</h1>
+<table width="100%">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Total price</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% basket.list_of_basket_records.each do |basket_record| %>
+      <tr>
+        <td><%= basket_record.product_name %></td>
+        <td><%= basket_record.product_price %></td>
+        <td><%= basket_record.quantity %></td>
+        <td><%= basket_record.sum_brutto %></td>
+        <td><button type="reset" value="Reset">Delete</button></td>
+      </tr>
+    <% end %>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td></td>
+      <td></td>
+      <td>Summary:</td>
+      <td><%= basket.sum_brutto %></td>
+  </tfoot>
+</table>

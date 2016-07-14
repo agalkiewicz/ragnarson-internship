@@ -35,13 +35,13 @@ module Shop
       "#{'%.2f' % sum_brutto}".ljust(13)
     end
 
+    def sum_brutto
+      list_of_basket_records.map(&:sum_brutto).reduce(0, :+)
+    end
+
     private
     def sum_netto
       list_of_basket_records.map(&:sum_netto).reduce(0, :+)
-    end
-
-    def sum_brutto
-      list_of_basket_records.map(&:sum_brutto).reduce(0, :+)
     end
   end
 end

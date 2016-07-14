@@ -15,8 +15,8 @@ module Shop
       @quantity += 1
     end
 
-    def decrease
-      @quantity -= 1
+    def decrease(amount)
+      @quantity -= amount
     end
 
     def to_s
