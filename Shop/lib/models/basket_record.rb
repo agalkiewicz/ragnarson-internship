@@ -1,8 +1,7 @@
 module Shop
   module Models
     class BasketRecord
-      attr_reader :id, :product_id, :product_name, :value_netto, :value_brutto,
-                  :quantity, :sum_netto, :sum_brutto
+      attr_reader :id, :product_id, :product_name, :value_brutto, :quantity, :sum_brutto
 
       @@id = 0
 
@@ -11,8 +10,7 @@ module Shop
         @id = set_id
         @product_id = product_id
         @product_name = product.name
-        @value_netto = product.price
-        @value_brutto = calculate_value_brutto(product.vat)
+        @value_brutto = (product.price * (1 + product.vat)).round(2)
         @quantity = amount
         @sum_brutto = value_brutto * amount
       end
@@ -30,10 +28,6 @@ module Shop
       private
       def set_id
         @@id += 1
-      end
-
-      def calculate_value_brutto(vat)
-        (value_netto * (1 + vat)).round(2)
       end
     end
   end

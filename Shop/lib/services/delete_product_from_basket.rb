@@ -9,9 +9,8 @@ module Shop
       private
       def decrease_basket_record_quantity(product_id)
         basket_record = FetchBasketRecord.new.call(product_id)
-        raise Models::Basket::NoProductFoundException unless basket_record
         if basket_record.quantity == 1
-          DeleteBasketRecord.new.call(product_id)
+          FetchBasket.new.call.delete(product_id)
         else
           basket_record.delete
         end

@@ -8,8 +8,7 @@ module Shop
       end
 
       def add(product_id, amount)
-        new_basket_record = BasketRecord.new(product_id, amount)
-        list_of_basket_records << new_basket_record
+        list_of_basket_records << BasketRecord.new(product_id, amount)
       end
 
       def delete(product_id)
