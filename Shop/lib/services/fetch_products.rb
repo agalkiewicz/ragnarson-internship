@@ -1,7 +1,9 @@
 module Shop
-  class FetchProducts
-    def call
-      PRODUCTS
+  module Services
+    class FetchProducts
+      def call
+        PRODUCTS
+      end
     end
   end
 end
