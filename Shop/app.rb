@@ -49,8 +49,12 @@ module Shop
 
     put "/basket/update" do
       DeleteProductFromBasket.new.call(params[:product_id])
-      flash[:notice] = "Product deleted."
+      flash[:notice] = "Product was deleted."
       redirect "/basket"
+    end
+
+    get "/contact" do
+      erb :"static/contact"
     end
   end
 end
