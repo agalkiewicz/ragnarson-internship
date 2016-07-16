@@ -2,8 +2,6 @@ module Shop
   class Basket
     attr_accessor :list_of_basket_records
 
-    NoProductFoundException = Class.new(StandardError)
-
     def initialize
       @list_of_basket_records = []
     end

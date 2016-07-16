@@ -2,6 +2,8 @@ module Shop
   class Products
     attr_reader :list_of_products
 
+    NoProductFoundException = Class.new(StandardError)
+
     def initialize
       @list_of_products = [
         Product.new(name: "Book",  price: 24.50, vat: 0.05),

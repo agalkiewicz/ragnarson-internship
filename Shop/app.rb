@@ -22,8 +22,13 @@ module Shop
     end
 
     get "/products/:id" do |id|
-      product = FetchProduct.new.call(id)
-      erb :"products/show", locals: { product: product }
+      begin
+        product = FetchProduct.new.call(id)
+        erb :"products/show", locals: { product: product }
+      rescue Products::NoProductFoundException
+        flash[:error] = "There is no product of this ID available."
+        redirect "/"
+      end
     end
 
     get "/basket" do
