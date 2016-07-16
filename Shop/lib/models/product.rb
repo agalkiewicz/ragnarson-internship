@@ -15,13 +15,6 @@ module Shop
       @vat = vat
     end
 
-    def to_s
-      "#{@id}".ljust(4) +
-      "#{@name}".ljust(10) +
-      "#{'%.2f' % @price}zl".ljust(10) +
-      "#{@vat}".ljust(10)
-    end
-
     private
     def set_id
       @@id += 1

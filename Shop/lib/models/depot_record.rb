@@ -19,12 +19,6 @@ module Shop
       @quantity -= amount
     end
 
-    def to_s
-      "#{id}".ljust(4) +
-      "#{product_id}".ljust(13) +
-      "#{quantity}".ljust(10)
-    end
-
     private
     def set_id
       @@id += 1

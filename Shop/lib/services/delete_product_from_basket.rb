@@ -1,8 +1,8 @@
 module Shop
   class DeleteProductFromBasket
     def call(product_id)
-      increase_depot_record_quantity(product_id)
-      decrease_basket_record_quantity(product_id)
+      increase_depot_record_quantity(product_id.to_i)
+      decrease_basket_record_quantity(product_id.to_i)
     end
 
     private

@@ -14,6 +14,7 @@ module Shop
   class App < Sinatra::Base
     enable :sessions
     register Sinatra::Flash
+    set :method_override, true
 
     get "/" do
       products = FetchListOfProducts.new.call
@@ -39,6 +40,12 @@ module Shop
         flash[:error] = "There are not so many products in a depot."
         redirect "/"
       end
+    end
+
+    put "/basket/update" do
+      DeleteProductFromBasket.new.call(params[:product_id])
+      flash[:notice] = "Product deleted."
+      redirect "/basket"
     end
   end
 end

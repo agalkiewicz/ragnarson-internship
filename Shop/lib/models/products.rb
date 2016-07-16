@@ -13,15 +13,12 @@ module Shop
     end
 
     def find(product_id)
-      list_of_products.find { |product| product.id == product_id }
-    end
-
-    def to_s
-      "Id".ljust(4) +
-      "Name".ljust(10) +
-      "Price".ljust(10) +
-      "VAT".ljust(6) + "\n" +
-      list_of_products.map(&:to_s).join("\n")
+      found_product = list_of_products.find { |product| product.id == product_id }
+      if found_product
+        found_product
+      else
+        raise NoProductFoundException
+      end
     end
   end
 end
