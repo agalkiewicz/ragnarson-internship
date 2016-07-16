@@ -1,8 +1,9 @@
-<h1><%= title %></h1>
-<% products.each do |product| %>
-  <p>
-    <a href="/products/<%= product.id %>">
+<h2><%= title %></h2>
+
+<div class="list-group">
+  <% products.each do |product| %>
+    <a class="list-group-item" href="/products/<%= product.id %>">
       <%= product.name %>
     </a>
-  </p>
-<% end %>
+  <% end %>
+</div>
