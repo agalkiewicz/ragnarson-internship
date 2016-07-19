@@ -10,22 +10,27 @@ RSpec.describe "GET /", type: :request do
   end
 
   it "returns valid html Content-Type" do
-    expect(last_response.headers["Content-Type"]).to include("text/html")
+    expect(last_response.headers["Content-Type"]).to eq("text/html;charset=utf-8")
   end
 
-  it "returns h1 element with 'Welcome to Alice's Shop' value" do
-    expect(last_response.body).to include("<h1>Welcome to Alice's Shop</h1>")
+  it "includes h1 element" do
+    expect(last_response.body).to include("<h1>")
   end
 
-  it "returns h2 element with 'Products' value" do
-    expect(last_response.body).to include("<h2>Products</h2>")
+  it "includes h2 element" do
+    expect(last_response.body).to include("<h2>")
   end
 
   it "returns link to basket" do
-    expect(last_response.body).to include("Basket")
+    expect(last_response.body).to include("<a href=\/basket>Basket<\/a>")
+  end
+
+  it "returns links to products" do
+    expect(last_response.body).to include("href=\"\/products\/")
   end
 
   private
+
   def do_request
     get "/"
   end

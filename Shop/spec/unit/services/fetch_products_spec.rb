@@ -1,31 +1,13 @@
-RSpec.describe Shop::Services::FetchProducts do
-  subject(:fetch_products) { Shop::Services::FetchProducts.new }
-  #let(:basket) { Shop::Basket.new }
-  #let(:product) { Shop::Product.new("foo", 5, 10) }
-
-  before do
-    #Shop::PRODUCTS
-    #allow(Shop).to receive(:PRODUCTS).and_return(:PRODUCTS)
-    #Shop::PRODUCTS << product
+RSpec.describe Shop::FetchProducts do
+  before(:all) do
+    Shop::PRODUCTS = Shop::Products.new
   end
 
+  subject(:fetch_products) { Shop::FetchProducts.new }
+
   context "#call" do
-    it "returns Products class object" do
-      expect(fetch_products.call).to be_an_instance_of(Products)
-    end
-
-    xit "raise no error" do
-      expect {
-        fetch_product.call(nil)
-      }.to_not raise_error
-    end
-
-    xit "return proper product" do
-      expect(fetch_product.call(product.id)).to eql(product)
-    end
-
-    xit "return nil when argument is not valid product id" do
-      expect(fetch_product.call(1000)).to eql(nil)
+    it "returns proper object" do
+      expect(fetch_products.call).to eql(Shop::PRODUCTS)
     end
   end
 end

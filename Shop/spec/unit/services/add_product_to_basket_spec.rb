@@ -1,64 +1,89 @@
-require "spec_helper"
-
-RSpec.describe Shop::Services::AddProductToBasket do
-  before do
-        Shop::PRODUCTS = Shop::Models::Products.new
-        Shop::BASKET = Shop::Models::Basket.new
-        Shop::DEPOT = Shop::Models::Depot.new
-      end
-      before { Shop::Services::CreateDepot.new.call }
-      #let(:new_basket_record) { BasketRecord.new(1, 1) }
-      before { Shop::BASKET.list_of_basket_records << BasketRecord.new(1, 1) }
-      let (:found_basket_record) do
-        Shop::BASKET.list_of_basket_records.find do |record|
-          record.product_id == 1
-        end
-      end
-  subject(:basket) { Shop::Services::AddProductToBasket.new }
-  let(:params) { { "product_id" => "1", "quantity" => "1" } }
+RSpec.describe Shop::AddProductToBasket do
+  before(:all) do
+    Shop::PRODUCTS = Shop::Products.new
+    Shop::BASKET   = Shop::Basket.new
+    Shop::DEPOT    = Shop::Depot.new
+    Shop::CreateDepot.new.call
+  end
 
   describe "#call" do
-    context "existing basket record" do
+    before(:context) do
+      Shop::BASKET.list_of_basket_records << Shop::BasketRecord.new(1, 1)
+    end
 
-      it "increases basket record quantity by specific amount" do
-        expect {
-          basket.call(params)
-        }.to change{ found_basket_record.quantity }.by(1)
+    context "when the basket record exists" do
+      let(:valid_amount) { 1 }
+      let(:invalid_amount) { 12 }
+      let(:product_id) { 1 }
+      let(:valid_params) { { "product_id" => "#{product_id}", "quantity" => "#{valid_amount}" } }
+      let(:invalid_params) { { "product_id" => "#{product_id}", "quantity" => "#{invalid_amount}" } }
+      let(:found_depot_record) do
+        Shop::DEPOT.list_of_depot_records.find { |record| record.product_id == product_id }
+      end
+      let(:found_basket_record) do
+        Shop::BASKET.list_of_basket_records.find { |record| record.product_id == product_id }
+      end
+
+      context "when quantity of depot record >= amount" do
+        subject(:valid_subject) { Shop::AddProductToBasket.new(valid_params) }
+
+        it "increases its quantity by specific amount" do
+          expect {
+            valid_subject.call
+          }.to change{ found_basket_record.quantity }.by(valid_amount)
+        end
+
+        it "decreases related depot record quantity by specific amount" do
+          expect {
+            subject.call
+          }.to change{ found_depot_record.quantity }.by(-valid_amount)
+        end
+      end
+
+      context "when quantity of depot_record < amount" do
+        subject(:invalid_subject) { Shop::AddProductToBasket.new(invalid_params) }
+
+        it "raises NoProductException" do
+          expect {
+            invalid_subject.call
+          }.to raise_error(Shop::Depot::NoProductException)
+        end
+      end
+    end
+
+    context "when basket record doesn't exist" do
+      let(:valid_amount) { 2 }
+      let(:invalid_amount) { 12 }
+      let(:product_id) { 2 }
+      let(:valid_params) { { "product_id" => "#{product_id}", "quantity" => "#{valid_amount}" } }
+      let(:invalid_params) { { "product_id" => "#{product_id}", "quantity" => "#{invalid_amount}" } }
+      let(:found_basket_record) do
+        Shop::BASKET.list_of_basket_records.find { |record| record.product_id == product_id }
+      end
+
+      context "when quantity of depot record >= amount" do
+        subject(:valid_subject) { Shop::AddProductToBasket.new(valid_params) }
+
+        it "creates new basket record" do
+          expect {
+            valid_subject.call
+          }.to change{ Shop::BASKET.list_of_basket_records.size }.by(1)
+        end
+
+        it "initializes new basket record with quantity=amount" do
+          expect(found_basket_record.quantity).to eql(valid_amount)
+        end
+      end
+
+      context "when quantity of depot_record < amount" do
+        subject(:invalid_subject) { Shop::AddProductToBasket.new(invalid_params) }
+
+        it "raises NoProductException" do
+          expect {
+            invalid_subject.call
+          }.to raise_error(Shop::Depot::NoProductException)
+        end
       end
     end
   end
 end
-
-=begin
-require_relative '../../../lib/services/delete_item_from_warehouse'
-
-RSpec.describe Shop::DeleteItemFromWarehouse do
-  subject(:warehouse) { Shop::DeleteItemFromWarehouse.new }
-
-  before do
-    allow(Shop).to receive(:WAREHOUSE).and_return([])
-    Shop::WAREHOUSE.clear
-  end
-
-  describe "#call" do
-    context "invalid id" do
-      it "raises no error" do
-        expect {
-          warehouse.call(nil)
-        }.to_not raise_error
-      end
-    end
-
-    context "valid id" do
-      let(:quantity) { 10 }
-      let!(:add_to_warehouse) { Shop::WAREHOUSE << Shop::Item.new(product_id: 1, quantity: quantity) }
-      let(:first_warehouse) { Shop::WAREHOUSE.first }
-
-      it "reduce quantity" do
-        expect {
-          warehouse.call(first_warehouse.id)
-        }.to change{ first_warehouse.quantity }.from(quantity).to(quantity-1)
-      end
-    end
-  end
-=end
