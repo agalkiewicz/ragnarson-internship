@@ -12,8 +12,9 @@ module Shop
   CreateDepot.new.call
 
   class App < Sinatra::Base
-    enable :sessions
     register Sinatra::Flash
+    enable :sessions
+    set :session_secret, "super secret"
     set :method_override, true
 
     get "/" do

@@ -9,11 +9,8 @@
   </head>
 
   <body class="container">
-    <% if flash[:notice] %>
-      <br><p class="alert alert-success"><%= flash[:notice] %>
-    <% end %>
-    <% if flash[:error] %>
-      <br><p class="alert alert-warning"><%= flash[:error] %>
+    <% flash.each do |key, value| %>
+      <br><p class="alert alert-<%= key == :notice ? "success" : "warning" %>"><%= value %></p>
     <% end %>
 
     <br><h1>Welcome to Alice's Shop</h1><br>

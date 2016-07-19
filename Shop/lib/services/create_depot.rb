@@ -3,8 +3,8 @@ module Shop
     def call
       FetchListOfProducts.new.call.each do |product|
         FetchDepot.new.call
-        .list_of_depot_records
-        .push(DepotRecord.new(product.id, rand(11) + 2))
+          .list_of_depot_records
+          .push(DepotRecord.new(product.id, rand(11) + 3))
       end
     end
   end

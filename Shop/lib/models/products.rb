@@ -16,11 +16,8 @@ module Shop
 
     def find(product_id)
       found_product = list_of_products.find { |product| product.id == product_id }
-      if found_product
-        found_product
-      else
-        raise NoProductFoundException
-      end
+      raise NoProductFoundException unless found_product
+      found_product
     end
   end
 end

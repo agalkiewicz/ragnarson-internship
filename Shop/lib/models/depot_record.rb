@@ -1,7 +1,6 @@
 module Shop
   class DepotRecord
-    attr_reader :id, :product_id
-    attr_accessor :quantity
+    attr_reader :id, :product_id, :quantity
 
     @@id = 0
 

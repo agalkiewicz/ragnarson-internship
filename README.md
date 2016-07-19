@@ -1,1 +1,0 @@
-# ragnarson-internship
