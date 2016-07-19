@@ -48,7 +48,7 @@ module Shop
       end
     end
 
-    put "/basket" do
+    delete "/basket" do
       DeleteProductFromBasket.new.call(params[:product_id])
       flash[:notice] = "Product was deleted."
       redirect "/basket"

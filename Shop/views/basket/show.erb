@@ -18,7 +18,7 @@
         <td><%= '%.2f' % basket_record.sum_brutto %></td>
         <td>
           <form action="/basket" method="post">
-            <input name="_method" value="put" type="hidden"/>
+            <input name="_method" value="delete" type="hidden"/>
             <input type="hidden" name="product_id" value=<%= basket_record.product_id %>>
             <input class="btn btn-default btn-sm" type="submit" value="Delete">
           </form>
